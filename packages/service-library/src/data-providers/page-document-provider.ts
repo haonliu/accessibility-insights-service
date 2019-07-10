@@ -71,6 +71,8 @@ export class PageDocumentProvider {
             query: `SELECT TOP @top * FROM c WHERE
 c.itemType = @itemType and c.websiteId = @websiteId and c.lastReferenceSeen >= @pageActiveBeforeTime and c.basePage = true
 and (
+((IS_NULL(c.unscannable) or NOT IS_DEFINED(c.unscannable)) or c.unscannable != true
+) and (
 ((IS_NULL(c.lastRun) or NOT IS_DEFINED(c.lastRun)))
 or ((c.lastRun.state = @failedState or c.lastRun.state = @queuedState or c.lastRun.state = @runningState)
     and (c.lastRun.retries < @maxRetryCount or IS_NULL(c.lastRun.retries) or NOT IS_DEFINED(c.lastRun.retries))
