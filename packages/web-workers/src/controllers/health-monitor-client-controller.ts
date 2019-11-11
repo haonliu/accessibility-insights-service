@@ -16,14 +16,16 @@ export class HealthMonitorClientController extends WebController {
     public constructor(
         @inject(ServiceConfiguration) protected readonly serviceConfig: ServiceConfiguration,
         @inject(ContextAwareLogger) contextAwareLogger: ContextAwareLogger,
-        //        @inject(A11yServiceClient) protected webApiClient: A11yServiceClient,
+        @inject(A11yServiceClient) protected webApiClient: A11yServiceClient,
     ) {
         super(contextAwareLogger);
     }
 
-    protected async handleRequest(...args: any[]): Promise<void> {
+    protected async handleRequest(...args: any[]): Promise<unknown> {
         const activityActionName = args[0];
         this.contextAwareLogger.logInfo(`Executing ${activityActionName} activity action.`);
+
+        return 'hello';
         // switch (activityActionName) {
         //     case 'createScanRequest': {
         //         this.createScanRequest();
